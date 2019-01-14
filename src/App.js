@@ -15,6 +15,7 @@ class App extends Component {
     //Async call to localstorage/db-server
      const products = JSON.parse(localStorage.getItem('products'));
      this.setState({products: products})
+     //console.log(products);
   }
 
 
@@ -31,8 +32,16 @@ class App extends Component {
     this.setState({products: newProducts});
   }
 
-  onEdit = (name)=>{
-    console.log('Edit item')
+  onEdit = (newProduct)=>{
+    const updatedProduct = this.state.products.map((product)=>{
+      console.log(product.id, newProduct.id);
+      if(product.id === newProduct.id){
+        return newProduct;
+      }else{
+        return product;
+      }  
+    });
+    this.setState({products: updatedProduct});
   }
 
   newItem = (theItem) =>{
@@ -48,7 +57,7 @@ class App extends Component {
     return (
       <div className="App">
         
-        <h1>Welcome to CRUD</h1>
+        <h1>Welcome to React CRUD</h1>
         <div className="container">
           <br/>
           <AddItem addItem={this.newItem}/>
@@ -60,7 +69,7 @@ class App extends Component {
         {this.state.products.map((product)=>{
           return(
             <div className="container"  key={product.name}>
-              <ProductItem deteleItem={this.onDelete} editItem={this.onEdit} {...product}/>
+              <ProductItem deteleItem={this.onDelete} editItem={this.onEdit} {...product}/>  
             </div>
           ) 
         })}

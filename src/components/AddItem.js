@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import uuid from 'uuid';
 
 export default class AddItem extends Component {
     state = {
@@ -18,6 +19,7 @@ export default class AddItem extends Component {
             if(this.nameInput.value !== '' && this.priceInput.value !== ''){
                 //Construct new product item object
                 const theItem = {
+                    id: uuid(),
                     name: this.nameInput.value,
                     price: this.priceInput.value
                 }
