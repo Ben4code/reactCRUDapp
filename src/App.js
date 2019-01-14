@@ -12,25 +12,37 @@ class App extends Component {
   }
 
   componentWillMount(){
+    //Async call to localstorage/db-server
      const products = JSON.parse(localStorage.getItem('products'));
      this.setState({products: products})
   }
 
 
   getProducts = ()=>{
+    //Get products from localstorage.
     return localStorage.getItem('products');
   }
 
   onDelete = (name) =>{
+    //filter and delete matched item.
     const newProducts = this.state.products.filter((product)=>{
         return product.name !== name;
     });
     this.setState({products: newProducts});
   }
 
-  onEdit = (name) =>{
+  onEdit = (name)=>{
+    console.log('Edit item')
+  }
 
-  } 
+  newItem = (theItem) =>{
+    //Update state with new item.
+    this.setState({
+      products: [theItem, ...this.state.products]
+    })
+
+  }
+   
   
   render() {
     return (
@@ -39,7 +51,9 @@ class App extends Component {
         <h1>Welcome to CRUD</h1>
         <div className="container">
           <br/>
-          <AddItem/>
+          <AddItem addItem={this.newItem}/>
+          <br/>
+          <div className="divider"></div>
           <br/>
         </div>
         

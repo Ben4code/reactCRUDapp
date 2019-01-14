@@ -3,25 +3,40 @@ import React, { Component } from 'react'
 export default class AddItem extends Component {
   render() {
     
-    AddItem = (item)=>{
-        console.log(item)
+    const getItem = (e)=>{
+        //Prevent default
+        e.preventDefault();
+        if(this.nameInput !== '' && this.priceInput !== ''){
+            //Construct new product item object
+            const theItem = {
+                name: this.nameInput.value,
+                price: this.priceInput.value
+            }
+            //Call addItem and pass new object to it
+            this.props.addItem(theItem);
+            //Wipe input fields.
+            this.nameInput.value = '';
+            this.priceInput.value = '';
+        }else{
+            //Error validation.
+            return alert("Fields can not be empty!");
+        }
+        
     }
 
     return (
       <div>
         <h5>Add a new Product</h5>
-        <div className="card-panel grey lighten-2">
+        <div className="card-panel grey lighten-3">
             <div className="row">
-                <form onSubmit={AddItem}>
-                    <div className="input-field  col m10 s8" style={{}} >
-                        <label htmlFor="name">Enter name</label>
-                        <input type="text" value="" onChange={AddItem}/>
+                <form onSubmit={getItem}>
+                    <div className="input-field col m10 s8" style={{}} >
+                        <input type="text" name="name" ref={ (nameInput)=> this.nameInput = nameInput} placeholder="Enter Name"/>
                     </div>
                     <div className="input-field  col m2 s3 offset-s1">
-                    <label htmlFor="price">Price</label>
-                        <input type="text" name="price" value="" onChange={AddItem}/>
+                        <input type="text" name="price" ref={ (priceInput)=> this.priceInput = priceInput} placeholder="Enter Price"/>
                     </div>
-                    <button className="btn green">Add <i className="fa fa-plus"></i></button>
+                    <button value="submit" className="btn green">Add <i className="fa fa-plus"></i></button>
                 </form>
             </div>         
         </div>
